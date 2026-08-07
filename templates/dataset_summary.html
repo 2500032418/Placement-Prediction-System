@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset Summary{% endblock %}
+
+{% block content %}
+
+<h2>Dataset Summary</h2>
+
+<p><b>Rows:</b> {{ shape[0] }}</p>
+<p><b>Columns:</b> {{ shape[1] }}</p>
+
+<h3>Column Names</h3>
+
+<ul>
+{% for col in columns %}
+    <li>{{ col }}</li>
+{% endfor %}
+</ul>
+
+<h3>Statistics</h3>
+
+{{ summary|safe }}
+
+{% endblock %}

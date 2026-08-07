@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset{% endblock %}
+
+{% block content %}
+
+<div class="page">
+
+    <h1>Placement Dataset</h1>
+
+    {% if upload_success %}
+    <div style="background:#d4edda;
+                color:#155724;
+                padding:10px;
+                margin-bottom:20px;
+                border-radius:5px;">
+         File uploaded successfully!
+    </div>
+    {% endif %}
+
+    <div class="cards">
+
+        <div class="card" onclick="showStudents()">
+            <h3>Total Students</h3>
+            <p id="students">Click to View</p>
+        </div>
+
+        <div class="card" onclick="showFeatures()">
+            <h3>Total Features</h3>
+            <p id="features">Click to View</p>
+        </div>
+
+        <div class="card" onclick="showMissing()">
+            <h3>Missing Values</h3>
+            <p id="missing">Click to View</p>
+        </div>
+
+        <div class="card" onclick="showDuplicate()">
+            <h3>Duplicate Records</h3>
+            <p id="duplicate">Click to View</p>
+        </div>
+
+    </div>
+
+    <h2>Dataset Operations</h2>
+
+    <form id="uploadForm"
+          action="/upload_dataset"
+          method="POST"
+          enctype="multipart/form-data">
+
+        <input
+            type="file"
+            id="datasetFile"
+            name="file"
+            accept=".csv"
+            style="display:none;"
+            onchange="document.getElementById('uploadForm').submit()">
+
+        <button type="button"
+                onclick="document.getElementById('datasetFile').click();">
+            Upload Dataset
+        </button>
+
+    </form>
+
+    <button onclick="window.location.href='/view_dataset'">
+        View Dataset
+    </button>
+
+    <button onclick="window.location.href='/dataset_summary'">
+        Dataset Summary
+    </button>
+
+</div>
+
+<script>
+
+const uploaded = {{ uploaded | tojson }};
+
+function showStudents() {
+    if (!uploaded) {
+        alert("Please upload the dataset first.");
+        return;
+    }
+    document.getElementById("students").innerHTML = "{{ total_students }}";
+}
+
+function showFeatures() {
+    if (!uploaded) {
+        alert("Please upload the dataset first.");
+        return;
+    }
+    document.getElementById("features").innerHTML = "{{ total_features }}";
+}
+
+function showMissing() {
+    if (!uploaded) {
+        alert("Please upload the dataset first.");
+        return;
+    }
+    document.getElementById("missing").innerHTML = "{{ missing_values }}";
+}
+
+function showDuplicate() {
+    if (!uploaded) {
+        alert("Please upload the dataset first.");
+        return;
+    }
+    document.getElementById("duplicate").innerHTML = "{{ duplicate_records }}";
+}
+
+</script>
+
+{% endblock %}

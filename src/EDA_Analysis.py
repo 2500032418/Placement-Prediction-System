@@ -348,6 +348,5 @@ if target is not None:
 
        plt.close()
 
-
 print("\nEDA Completed Successfully.")
 print("All figures are saved in:", OUTPUT_FOLDER)
